@@ -31,9 +31,9 @@ public class Rider extends Usuario{
 	private double valoracionMedia;
 	
 	//Constructor
-	public Rider(String id, String nombre, String apellidos, String email, String password, String NIF,
+	public Rider(String id, String nombre, String apellidos, String email, String password,String passwordDoble, String NIF,
 			String tipoVehiculo, String matricula, String carnet) {
-		super(id, nombre, apellidos, email, password);
+		super(id, nombre, apellidos, email, password,passwordDoble);
 		this.NIF = NIF;
 		this.tipoVehiculo = tipoVehiculo;
 		this.matricula = matricula;

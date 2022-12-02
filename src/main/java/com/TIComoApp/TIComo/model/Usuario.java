@@ -39,18 +39,24 @@ public class Usuario {
 	@NonNull
 	private String password;
 	@NonNull
+	private String passwordDoble;
+	@NonNull
 	private boolean cuentaActiva;
+	@NonNull
+	private int intentos;
 
 
 
 	//Constructor
-	public Usuario(String id, String nombre, String apellidos, String email, String password) {
+	public Usuario(String id, String nombre, String apellidos, String email, String password,String passwordDoble) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
 		this.password = password;
+		this.passwordDoble = passwordDoble;
 		this.cuentaActiva = true;
+		this.intentos = 5;
 
 	}
 	public Usuario() {
@@ -74,6 +80,12 @@ public class Usuario {
 
 
 
+	public int getIntentos() {
+		return intentos;
+	}
+	public void setIntentos(int intentos) {
+		this.intentos = intentos;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -121,8 +133,14 @@ public class Usuario {
 	}
 
 
-
-
+	//MANTENIMIENTO -->
+	public String getPasswordDoble() {
+		return passwordDoble;
+	}
+	public void setPasswordDoble(String passwordDoble) {
+		this.passwordDoble = passwordDoble;
+	}// <--
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -131,6 +149,12 @@ public class Usuario {
 	}
     public void setCuentaActiva(boolean cuentaActiva) {
 		this.cuentaActiva = cuentaActiva;
+		
+		if(this.cuentaActiva) {
+			this.intentos = 5;
+		}else {
+			this.intentos = 0;
+		}
 	}
 
 
@@ -173,7 +197,7 @@ public class Usuario {
         // El email a validar
  
         Matcher mather = pattern.matcher(email);
- 
+        
         if (mather.find() == true) {
             return true;
         } else {

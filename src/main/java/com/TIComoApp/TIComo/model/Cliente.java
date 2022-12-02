@@ -30,9 +30,9 @@ public class Cliente extends Usuario{
 	private String telefono;
 	
 	//Constructor
-	public Cliente(String id, String nombre, String apellidos, String email, String password, String NIF,
+	public Cliente(String id, String nombre, String apellidos, String email, String password,String passwordDoble, String NIF,
 			String direccionCompleta, String telefono) {
-		super(id, nombre, apellidos, email, password);
+		super(id, nombre, apellidos, email, password,passwordDoble);
 		this.NIF = NIF;
 		this.direccionCompleta = direccionCompleta;
 		this.telefono = telefono;
@@ -73,13 +73,42 @@ public class Cliente extends Usuario{
 	}
 	
 	public boolean telefonoValido(String telefono) {
-		if(telefono.length() == 9) {
-			return true;
-		}
-		else {
+		//MANTENIMIENTO
+		//Compruebo que sea un número con length válida
+		if(telefono.length() != 9) 
+				return false;
+		
+		//Compruebo que sea un número en el rango de los válidos para ESPAÑA
+		if(telefono.charAt(0) != '6' && telefono.charAt(0) != '7' && 
+				telefono.charAt(0) != '8' && telefono.charAt(0) != '9')
 			return false;
-		}
+		
+		//Compruebo que sea un número real y no contenga letras
+		for(int i = 0; i < telefono.length(); i++)
+			if(!Character.isDigit(telefono.charAt(i)))
+				return false;
+		
+		return true;
+		
 	}
+	//MANTENIMIENTO
+	public boolean comprobarNif(String nif2){
+		
+		//Compruebo que tiene 9 caracteres
+		if(nif2.length() != 9) 
+			return false;
+		//Compruebo que hay dígitos hasta el último caracter
+		for(int i = 0; i < nif2.length()-1; i++) {
+			if(!Character.isDigit(nif2.charAt(i)))
+				return false;
+		}
+		//Compruebo que el último caracter sea una letra
+		if(!Character.isAlphabetic(nif2.charAt(nif2.length()-1)))
+			return false;
+		
+		return true;
+	}
+
 
 	
 
