@@ -14,11 +14,14 @@ package com.TIComoApp.TIComo.controller;
 
 import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.TIComoApp.TIComo.model.Cliente;
 //MANTENIMIENTO
 @CrossOrigin
@@ -54,7 +57,7 @@ public class AuthenticationController {
 			authServ.create(cliente);
 			
 		}catch(Exception e) {
-			throw new Exception(e.getMessage());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 		}
 			
 	}

@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -14,6 +15,9 @@ import com.TIComoApp.TIComo.model.Rider;
 import com.TIComoApp.TIComo.repository.AdministradorRepository;
 import com.TIComoApp.TIComo.repository.ClienteRepository;
 import com.TIComoApp.TIComo.repository.RiderRepository;
+
+
+@Service
 
 public class AuthService {
 	
@@ -50,7 +54,7 @@ public class AuthService {
 		if(cliente.getNombre().equals("") || cliente.getApellidos().equals("") || cliente.getNIF().equals("")
 				|| cliente.getEmail().equals("") || cliente.getDireccionCompleta().equals("") ||
 				cliente.getPassword().equals("") || cliente.getTelefono().equals("") || cliente.getPasswordDoble().equals(""))
-				throw new Exception(ERRFORM);
+			throw new Exception(ERRFORM);
 		
 		//Comprueba la seguridad de la contraseña
 		if(!cliente.contraseniaSegura(cliente.getPassword()))
