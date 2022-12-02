@@ -20,12 +20,6 @@ import com.TIComoApp.TIComo.repository.RiderRepository;
 @Service
 
 public class AuthService {
-	
-	static final String ERRFORM= "errorForm";
-	static final  String ERRPWD= "errorPassword";
-	static final  String ERREMAIL= "emailRepetido";
-	static final String ERRNIF = "nifNoValid";
-	static final String ERRTLF = "tlfNoValid";
 
 	@Autowired
 	private ClienteRepository clienteRepository;
@@ -54,33 +48,33 @@ public class AuthService {
 		if(cliente.getNombre().equals("") || cliente.getApellidos().equals("") || cliente.getNIF().equals("")
 				|| cliente.getEmail().equals("") || cliente.getDireccionCompleta().equals("") ||
 				cliente.getPassword().equals("") || cliente.getTelefono().equals("") || cliente.getPasswordDoble().equals(""))
-			throw new Exception(ERRFORM);
+			throw new Exception("Faltan campos por rellenar");
 		
 		//Comprueba la seguridad de la contraseña
 		if(!cliente.contraseniaSegura(cliente.getPassword()))
-			throw new Exception(ERRPWD);
+			throw new Exception("La contraseña debe tener al menos 8 caracteres, mayusculas, minusculas y al menos un número");
 		
 		//Comprueba que ha escrito la misma contraseña
 		if(!cliente.getPassword().equalsIgnoreCase(cliente.getPasswordDoble()))
-			throw new Exception(ERRPWD);
+			throw new Exception("Las contraseñas no coinciden");
 		
 		//Comprueba que el email es válido
 		if(!cliente.formatoCorreoCorrecto(cliente.getEmail()))
-			throw new Exception(ERREMAIL);
+			throw new Exception("El correo electronico no es valido");
 		
 		//Comprueba que el email no exista ya
 		Optional<Cliente> compruebaSiExiste = clienteRepository.findByemail(cliente.getEmail());
 		
 		if(compruebaSiExiste.isPresent())
-			throw new Exception(ERREMAIL);
+			throw new Exception("No existe");
 		
 		//Comprueba el nif
 		if(!cliente.comprobarNif(cliente.getNIF()))
-			throw new Exception(ERRNIF);
+			throw new Exception("El NIF no es valido");
 		
 		//Comprueba el teléfono
 		if(!cliente.telefonoValido(cliente.getTelefono()))
-			throw new Exception(ERRTLF);
+			throw new Exception("El telefono no es valido");
 		
 		//No hay errores, entonces codifica la contraseña y guarda en BBDD
 		cliente.setPassword(BCrypt.hashpw(cliente.getPassword(), BCrypt.gensalt()));
