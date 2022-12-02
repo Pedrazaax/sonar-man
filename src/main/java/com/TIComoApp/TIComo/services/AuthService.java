@@ -2,7 +2,6 @@ package com.TIComoApp.TIComo.services;
 
 import java.util.Optional;
 
-import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,8 @@ import com.TIComoApp.TIComo.model.Rider;
 import com.TIComoApp.TIComo.repository.AdministradorRepository;
 import com.TIComoApp.TIComo.repository.ClienteRepository;
 import com.TIComoApp.TIComo.repository.RiderRepository;
+import org.json.JSONObject;
+
 
 
 @Service
@@ -100,10 +101,11 @@ public class AuthService {
 	*/
 	@PostMapping("/login")
 	public
-	JsonObject loginUser(@RequestBody Cliente cliente) throws Exception {
+	JSONObject loginUser(@RequestBody Cliente cliente) throws Exception {
 		//MANTENIMIENTO
 		//Ahora devuelve un token para la seguridad
 		String token = "";
+		JSONObject jso = new JSONObject();
 		boolean esClienteLogin = false;
 		boolean esRiderLogin = false;
 		boolean esAdminLogin = false;
@@ -161,9 +163,12 @@ public class AuthService {
 			token = "clienteToken";
 			
 			//Construye la respuesta
-			return new JsonObject("{\"respuesta\":\"clienteLogin\",\"idCliente\":\""+
-									clienteEncontrado.get().getId()+"\",\"token\":\""+ token
-									+"\",\"nombre\":\""+ clienteEncontrado.get().getNombre()+ "\"}");
+			jso.put("respuesta", "clienteLogin");
+			jso.put("idCliente", clienteEncontrado.get().getId());
+			jso.put("token", token);
+			jso.put("nombre", clienteEncontrado.get().getNombre());
+			jso.put("email", clienteEncontrado.get().getEmail());
+			return jso;
 			}
 		
 		//Si es tipo Rider...
@@ -192,9 +197,12 @@ public class AuthService {
 			token = "riderToken";
 			
 			//Construye la respuesta
-			return new JsonObject("{\"respuesta\":\"riderLogin\",\"idRider\":\""+
-									riderEncontrado.get().getId()+"\",\"token\":\""+ token
-									+"\",\"nombre\":\""+ riderEncontrado.get().getNombre()+ "\"}");
+			jso.put("respuesta", "clienteLogin");
+			jso.put("idCliente", riderEncontrado.get().getId());
+			jso.put("token", token);
+			jso.put("nombre", riderEncontrado.get().getNombre());
+			jso.put("email", riderEncontrado.get().getEmail());
+			return jso;
 			}
 		
 		//Si es admin...
@@ -223,9 +231,12 @@ public class AuthService {
 			token = "adminToken";
 			
 			//Construye la respuesta
-			return new JsonObject("{\"respuesta\":\"adminLogin\",\"idAdmin\":\""+
-					adminEncontrado.get().getId()+"\",\"token\":\""+ token +"\",\"nombre\":\""+ 
-					adminEncontrado.get().getNombre() + "\"}");
+			jso.put("respuesta", "clienteLogin");
+			jso.put("idCliente", clienteEncontrado.get().getId());
+			jso.put("token", token);
+			jso.put("nombre", clienteEncontrado.get().getNombre());
+			jso.put("email", clienteEncontrado.get().getEmail());
+			return jso;
 			}
 		
 		throw new Exception("Error en el LogIn. No se pudo loggear");
