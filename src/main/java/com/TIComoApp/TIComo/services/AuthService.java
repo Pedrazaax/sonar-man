@@ -29,6 +29,8 @@ public class AuthService {
 	
 	@Autowired
 	private RiderRepository riderRepository;
+	
+	static final String errorContraseña = "Contraseña incorrecta";
 	/*
 	* 
 	*
@@ -65,8 +67,9 @@ public class AuthService {
 		//Comprueba que el email no exista ya
 		Optional<Cliente> compruebaSiExiste = clienteRepository.findByemail(cliente.getEmail());
 		
+		//Comprueba que el correo ya esté en la bbdd
 		if(compruebaSiExiste.isPresent())
-			throw new Exception("No existe");
+			throw new Exception("Este correo ya está registrado");
 		
 		//Comprueba el nif
 		if(!cliente.comprobarNif(cliente.getNIF()))
@@ -111,7 +114,7 @@ public class AuthService {
 		
 		//Comprueba que el formulario ha sido rellenado
 		if(cliente.getEmail().isEmpty() || cliente.getPassword().isEmpty())
-			throw new Exception(ERREMAIL + " or " + ERRPWD);
+			throw new Exception("Completa los campos");
 		
 		//Busca los posibles login
 		clienteEncontrado = clienteRepository.findByemail(cliente.getEmail());
@@ -120,7 +123,7 @@ public class AuthService {
 		
 		//Comprueba si no hay ningún posible logIn presente
 		if(!clienteEncontrado.isPresent() && !adminEncontrado.isPresent() && !riderEncontrado.isPresent())
-			throw new Exception(ERREMAIL);
+			throw new Exception("El correo no existe");
 		
 		//Para el login que encuentra, confirma su tipo
 		if(clienteEncontrado.isPresent())
@@ -147,7 +150,7 @@ public class AuthService {
 						clienteEncontrado.get().setCuentaActiva(false);
 					
 					clienteRepository.save(clienteEncontrado.get());
-					throw new Exception(ERRPWD);
+					throw new Exception(errorContraseña);
 			}
 			
 			//Ha acertado, deja el estado del usuario con sus intentos sin tocar
@@ -178,7 +181,7 @@ public class AuthService {
 					riderEncontrado.get().setCuentaActiva(false);
 				
 				riderRepository.save(riderEncontrado.get());
-				throw new Exception(ERRPWD);
+				throw new Exception(errorContraseña);
 			}
 			
 			//De acertar, deja el estado como estaba
@@ -209,7 +212,7 @@ public class AuthService {
 					adminEncontrado.get().setCuentaActiva(false);
 				
 				adminRepository.save(adminEncontrado.get());
-				throw new Exception(ERRPWD);
+				throw new Exception(errorContraseña);
 			}
 			
 			//Es correcta la contraseña...
