@@ -48,7 +48,7 @@ public class Usuario {
 
 
 	//Constructor
-	public Usuario(String id, String nombre, String apellidos, String email, String password,String passwordDoble) {
+	public Usuario(String id, String nombre, String apellidos, String email, String password,String passwordDoble,boolean cuentaActiva, int intentos) {
 		this.id = id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
