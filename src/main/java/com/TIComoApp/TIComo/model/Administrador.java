@@ -12,6 +12,7 @@
 
 package com.TIComoApp.TIComo.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mongodb.lang.NonNull;
@@ -23,20 +24,31 @@ import lombok.Data;
 @Document(collection = "admins")
 public class Administrador extends Usuario{
 	
+	@Id
+	private String id;
 	@NonNull
 	private String zona;
 	
 	//Constructor
-	public Administrador(String id, String nombre, String apellidos, String email, String password,String passwordDoble, String zona, boolean cuentaActiva,int intentos) {
-		super(id, nombre, apellidos, email, password,passwordDoble, cuentaActiva, intentos);
+	public Administrador(String nombre, String apellidos,
+			String email, String password,String passwordDoble,boolean cuentaActiva, int intentos, String zona) {
+		super(nombre, apellidos, email, password,passwordDoble, cuentaActiva, intentos);
 		this.zona = zona;
 	}
-	public Administrador(){
-		
-	}
+	
 	//Getters, Setters y toString
+	
+	
 	public String getZona() {
 		return zona;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public void setZona(String zona) {

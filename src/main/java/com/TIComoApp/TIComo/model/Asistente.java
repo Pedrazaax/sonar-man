@@ -1,5 +1,6 @@
 package com.TIComoApp.TIComo.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mongodb.lang.NonNull;
@@ -9,14 +10,31 @@ import lombok.Data;
 @Data
 @Document(collection = "asistentes")
 public class Asistente extends Usuario{
+	
+	@Id
+	private String id;
 	@NonNull
 	private String telefono;
 	
 	//Constructor
-	public Asistente(String id, String nombre, String apellidos, String email, String password,String passwordDoble,boolean cuentaActiva,int intentos, String telefono) {
-		super(id, nombre, apellidos, email, password,passwordDoble, cuentaActiva, intentos);
+	public Asistente(String nombre, String apellidos, String email, String password,
+			String passwordDoble, boolean cuentaActiva, int intentos, String telefono) {
+		super(nombre, apellidos, email, password,passwordDoble, cuentaActiva, intentos);
 		this.telefono = telefono;
 	}
+	
+	
+	public String getId() {
+		return id;
+	}
+
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
 
 	public String getTelefono() {
 		return telefono;

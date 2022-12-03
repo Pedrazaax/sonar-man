@@ -112,21 +112,21 @@ public class ClienteController {
 				}
 			}
 			if(emailRepetido) {
-				return new Cliente(ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,false,0);
+				return new Cliente(ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,false,0,ERREMAIL,ERREMAIL,ERREMAIL);
 			}
 			
 			else if(!cliente.formatoCorreoCorrecto(cliente.getEmail())){
-				return new Cliente(EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,false,0);	
+				return new Cliente(ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,false,0,ERREMAIL,ERREMAIL,ERREMAIL);	
 			}
 			else if(!cliente.telefonoValido(cliente.getTelefono())) {
-				return new Cliente(ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,false,0); 
+				return new Cliente(ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,false,0,ERREMAIL,ERREMAIL,ERREMAIL); 
 			}
 			else {
 				return clienteRepository.save(cliente);
 			}
 		}
 		else {
-			return new Cliente(ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,false,0);
+			return new Cliente(ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,false,0,ERREMAIL,ERREMAIL,ERREMAIL);
 		}
 		
 		
@@ -168,17 +168,17 @@ public class ClienteController {
 			}
 			
 			if(!cliente.formatoCorreoCorrecto(cliente.getEmail())){
-				return new Cliente(EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,false,0);	
+				return new Cliente(ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,false,0,ERREMAIL,ERREMAIL,ERREMAIL);	
 			}
 			else if(!cliente.telefonoValido(cliente.getTelefono())) {
-				return new Cliente(ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,ERRORTLF,false,0); 
+				return new Cliente(ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,false,0,ERREMAIL,ERREMAIL,ERREMAIL);
 			}
 			else {
 				return clienteRepository.save(clienteFromDB);
 			}
 		}
 		else {
-			return new Cliente(ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,false,0);
+			return new Cliente(ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,ERREMAIL,false,0,ERREMAIL,ERREMAIL,ERREMAIL);
 		}
 		
 		
@@ -197,7 +197,7 @@ public class ClienteController {
 	@PutMapping("")
 	public
 	Cliente desactivarActivarCliente(@RequestBody Cliente cliente) {
-		Cliente clienteFromDB = clienteRepository.findById(cliente.getId()).orElseThrow(RuntimeException::new);
+		Cliente clienteFromDB = clienteRepository.findById(cliente.getNIF()).orElseThrow(RuntimeException::new);
 		clienteFromDB.setCuentaActiva(cliente.isCuentaActiva());
 		return clienteRepository.save(clienteFromDB);
 	}

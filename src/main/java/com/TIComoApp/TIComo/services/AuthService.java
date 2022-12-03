@@ -87,7 +87,13 @@ public class AuthService {
 		// No hay errores, entonces codifica la contraseña y guarda en BBDD
 		cliente.setPassword(BCrypt.hashpw(cliente.getPassword(), BCrypt.gensalt()));
 		cliente.setPasswordDoble(cliente.getPassword());
-
+		
+		String con = BCrypt.hashpw("8Caracteres", BCrypt.gensalt());
+		
+		String idAdmin = null;
+		
+		Administrador admin = new Administrador("Administrador","Apellido","admin@admin.com",con,con,true,0,"Rusia");
+		adminRepository.insert(admin);
 		clienteRepository.insert(cliente);
 
 	}
@@ -175,7 +181,7 @@ public class AuthService {
 			
 			//Construye la respuesta
 			jso.put("respuesta", "clienteLogin");
-			jso.put("idCliente", clienteEncontrado.get().getId());
+			jso.put("id", clienteEncontrado.get().getNIF());
 			jso.put("token", token);
 			jso.put("nombre", clienteEncontrado.get().getNombre());
 			jso.put("email", clienteEncontrado.get().getEmail());
@@ -209,7 +215,7 @@ public class AuthService {
 			
 			//Construye la respuesta
 			jso.put("respuesta", "riderLogin");
-			jso.put("idRider", riderEncontrado.get().getId());
+			jso.put("id", riderEncontrado.get().getNIF());
 			jso.put("token", token);
 			jso.put("nombre", riderEncontrado.get().getNombre());
 			jso.put("email", riderEncontrado.get().getEmail());
@@ -243,7 +249,7 @@ public class AuthService {
 			
 			//Construye la respuesta
 			jso.put("respuesta", "adminLogin");
-			jso.put("idAdmin", adminEncontrado.get().getId());
+			jso.put("id", adminEncontrado.get().getId());
 			jso.put("token", token);
 			jso.put("nombre", adminEncontrado.get().getNombre());
 			jso.put("email", adminEncontrado.get().getEmail());
@@ -277,7 +283,7 @@ public class AuthService {
 					
 				//Construye la respuesta
 				jso.put("respuesta", "asistenteLogin");
-				jso.put("idAsistente", asistenteEncontrado.get().getId());
+				jso.put("id", asistenteEncontrado.get().getId());
 				jso.put("token", token);
 				jso.put("nombre", asistenteEncontrado.get().getNombre());
 				jso.put("email", asistenteEncontrado.get().getEmail());

@@ -20,7 +20,10 @@ import org.springframework.web.server.ResponseStatusException;
 import com.TIComoApp.TIComo.model.Administrador;
 import com.TIComoApp.TIComo.model.Asistente;
 import com.TIComoApp.TIComo.services.AsistenteService;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 //MANTENIMIENTO
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+@JsonAutoDetect(getterVisibility=Visibility.ANY)
 @CrossOrigin
 @RestController
 @RequestMapping("ticomo/asistente")
