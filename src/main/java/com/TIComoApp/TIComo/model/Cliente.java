@@ -11,6 +11,7 @@
 
 package com.TIComoApp.TIComo.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mongodb.lang.NonNull;
@@ -22,7 +23,7 @@ import lombok.Data;
 @Document(collection = "clientes")
 public class Cliente extends Usuario{
 	
-	@NonNull
+	@Id
 	private String NIF;
 	@NonNull
 	private String direccionCompleta;
@@ -30,16 +31,12 @@ public class Cliente extends Usuario{
 	private String telefono;
 	
 	//Constructor
-	public Cliente(String id, String nombre, String apellidos, String email, String password,String passwordDoble, String NIF,
-			String direccionCompleta, String telefono) {
-		super(id, nombre, apellidos, email, password,passwordDoble);
+	public Cliente(String nombre, String apellidos, String email, String password, String passwordDoble,
+			boolean cuentaActiva, int intentos, String NIF,String direccionCompleta, String telefono) {
+		super(nombre, apellidos, email, password,passwordDoble, cuentaActiva, intentos);
 		this.NIF = NIF;
 		this.direccionCompleta = direccionCompleta;
 		this.telefono = telefono;
-	}
-	
-	public Cliente() {
-		
 	}
 	
 	//Getters, Setters y toString

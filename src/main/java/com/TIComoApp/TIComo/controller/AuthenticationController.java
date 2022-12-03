@@ -76,7 +76,7 @@ public class AuthenticationController {
 	*/
 	@PostMapping("/login")
 	public
-	JSONObject loginUser(@RequestBody Cliente cliente) throws Exception {
+	String loginUser(@RequestBody Cliente cliente) throws Exception {
 		//MANTENIMIENTO
 		
 		try {
@@ -85,7 +85,8 @@ public class AuthenticationController {
 					|| cliente.getIntentos()<= 0)
 					throw new Exception("Error login");
 			
-			return authServ.loginUser(cliente);
+			JSONObject jso = authServ.loginUser(cliente);
+			return jso.toString();
 			
 		}catch(Exception e) {
 			throw new Exception(e.getMessage());

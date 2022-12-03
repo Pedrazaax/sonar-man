@@ -28,8 +28,6 @@ import lombok.Data;
 
 @Data
 public class Usuario {
-	@Id
-	private String id;
 	@NonNull
 	private String nombre;
 	@NonNull
@@ -41,44 +39,28 @@ public class Usuario {
 	@NonNull
 	private String passwordDoble;
 	@NonNull
-	private boolean cuentaActiva;
+	private boolean cuentaActiva = true;
 	@NonNull
-	private int intentos;
+	private int intentos = 5;
 
 
 
 	//Constructor
-	public Usuario(String id, String nombre, String apellidos, String email, String password,String passwordDoble) {
-		this.id = id;
+	public Usuario(String nombre, String apellidos, String email, String password,String passwordDoble,boolean cuentaActiva, int intentos) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
 		this.password = password;
 		this.passwordDoble = passwordDoble;
-		this.cuentaActiva = true;
-		this.intentos = 5;
+		this.cuentaActiva = cuentaActiva;
+		this.intentos = intentos;
 
 	}
 	public Usuario() {
 		
 	}
 
-
-
 	//Getters, Setters y toString
-	public String getId() {
-		return id;
-	}
-
-
-
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-
-
 
 	public int getIntentos() {
 		return intentos;
@@ -90,43 +72,25 @@ public class Usuario {
 		return nombre;
 	}
 
-
-
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-
-
 
 	public String getApellidos() {
 		return apellidos;
 	}
 
-
-
-
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
-
-
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
-
 
 	public String getPassword() {
 		return password;

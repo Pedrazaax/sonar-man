@@ -103,16 +103,16 @@ public class RiderController {
 			String passwordRider = rider.getPassword();
 			rider.setPassword(BCrypt.hashpw(passwordRider, BCrypt.gensalt()));	
 			if(!rider.comprobarMatricula(rider.getMatricula())) {
-				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
+				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 			}
 			else if(!rider.formatoCorreoCorrecto(rider.getEmail())) {
-				return new Rider(EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR);
+				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 			}else {
 				return riderRepository.save(rider);
 			}
 		}
 		else {
-			return new Rider(ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD);
+			return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 		}
 	}
 	/*
@@ -142,16 +142,16 @@ public class RiderController {
 			riderFromDB.setValoracionMedia(rider.getValoracionMedia());
 			
 			if(!rider.comprobarMatricula(rider.getMatricula())) {
-				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
+				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 			}
 			else if(!rider.formatoCorreoCorrecto(rider.getEmail())) {
-				return new Rider(EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR);
+				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 			}else {
 				return riderRepository.save(riderFromDB);
 			}
 		}
 		else {
-			return new Rider(ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD);
+			return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 		}
 		
 		
@@ -172,7 +172,7 @@ public class RiderController {
 	@PutMapping("")
 	public
 	Rider desactivarActivarRider(@RequestBody Rider rider) {
-		Rider riderFromDB = riderRepository.findById(rider.getId()).orElseThrow(RuntimeException::new);
+		Rider riderFromDB = riderRepository.findById(rider.getNIF()).orElseThrow(RuntimeException::new);
 		riderFromDB.setCuentaActiva(rider.isCuentaActiva());
 		return riderRepository.save(riderFromDB);
 	}
