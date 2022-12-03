@@ -12,6 +12,7 @@ package com.TIComoApp.TIComo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ import com.TIComoApp.TIComo.model.Entrega;
 import com.TIComoApp.TIComo.model.Pedido;
 import com.TIComoApp.TIComo.repository.PedidoRepository;
 import com.TIComoApp.TIComo.services.PedidosService;
+import com.mongodb.lang.NonNull;
 
 @CrossOrigin
 @RestController
@@ -58,7 +60,7 @@ public class PedidoController {
 	*
 	*/
 	
-	@PostMapping("/obtenerPedidosCliente")
+	@PostMapping("obtenerPedidosCliente")
 	public
 	List<Pedido> obtenerPedidos(@RequestBody String id) {
 		//MANTENIMIENTO
@@ -85,7 +87,7 @@ public class PedidoController {
 	*
 	*/
 	
-	@PostMapping("/crearPedido")
+	@PostMapping("crearPedido")
 	public
 	Pedido create(@RequestBody Pedido pedido) {
 		
@@ -112,15 +114,23 @@ public class PedidoController {
 	*
 	*/
 	
-	@PostMapping("/pedidoRealizado")
+	@PostMapping("pedidoRealizado")
 	public
-	Pedido pedidoRealizado(@RequestBody String id,@RequestBody Entrega entrega) throws Exception {
+	Pedido pedidoRealizado(@RequestBody Map<String,String> mapita) throws Exception {
 		
 			try {
-				if(id.isEmpty())
+				if(mapita.get("idPedido").isEmpty())
 					throw new Exception("id no válido");
-				pedidosServ.checkMethod(entrega);
-				return pedidosServ.pedidoRealizado(id,entrega);
+				
+				String id = mapita.get("idPedido");
+				mapita.remove("idPedido");
+				Entrega e = new Entrega(mapita.get("idCliente"),mapita.get("nombreCliente")
+						,mapita.get("apellidosCliente"),mapita.get("direccion"),mapita.get("telefonoCliente")
+						,mapita.get("pedidosRealizados")
+						,Double.parseDouble(mapita.get("precioTotal")),mapita.get("nombreRestaurante"));
+				
+				pedidosServ.checkMethod(e);
+				return pedidosServ.pedidoRealizado(id,e);
 			}catch(Exception e) {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
 			}
@@ -138,8 +148,7 @@ public class PedidoController {
 	*
 	*
 	*/
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@PostMapping("/deletePedido")
+	@PostMapping("deletePedido")
 	public
 	void delete(@RequestBody String id) {
 		
