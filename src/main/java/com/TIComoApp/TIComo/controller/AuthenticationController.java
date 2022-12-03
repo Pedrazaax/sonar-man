@@ -13,6 +13,7 @@
 package com.TIComoApp.TIComo.controller;
 
 import org.bson.json.JsonObject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -75,7 +76,7 @@ public class AuthenticationController {
 	*/
 	@PostMapping("/login")
 	public
-	JsonObject loginUser(@RequestBody Cliente cliente) throws Exception {
+	JSONObject loginUser(@RequestBody Cliente cliente) throws Exception {
 		//MANTENIMIENTO
 		
 		try {

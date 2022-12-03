@@ -2,7 +2,6 @@ package com.TIComoApp.TIComo.services;
 
 import java.util.Optional;
 
-import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ import com.TIComoApp.TIComo.model.Rider;
 import com.TIComoApp.TIComo.repository.AdministradorRepository;
 import com.TIComoApp.TIComo.repository.ClienteRepository;
 import com.TIComoApp.TIComo.repository.RiderRepository;
-
+import org.json.JSONObject;
 
 @Service
 
@@ -23,95 +22,102 @@ public class AuthService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
-	
+
 	@Autowired
 	private AdministradorRepository adminRepository;
-	
+
 	@Autowired
 	private RiderRepository riderRepository;
-	
+
+	@Autowired
+	private AsistenteRepository asistenteRepository;
+
 	static final String errorContraseña = "Contraseña incorrecta";
+
 	/*
-	* 
-	*
-	* Method name:create
-	* Description of the Method: se encarga de realizar el registro del cliente en la base de datos
-	* Calling arguments: un cliente(Es el que queremos introducir en la base de datos)
-	* Return value: un cliente
-	* Required Files: Tabla clientes de MongoDB
-	*
-	*
-	*/
+	 * 
+	 *
+	 * Method name:create Description of the Method: se encarga de realizar el
+	 * registro del cliente en la base de datos Calling arguments: un cliente(Es el
+	 * que queremos introducir en la base de datos) Return value: un cliente
+	 * Required Files: Tabla clientes de MongoDB
+	 *
+	 *
+	 */
 	@PostMapping("/register")
-	public
-	void create(@RequestBody Cliente cliente) throws Exception {
-		//MANTENIMIENTO
-		//Comprueba que el formulario está completo
-		if(cliente.getNombre().equals("") || cliente.getApellidos().equals("") || cliente.getNIF().equals("")
-				|| cliente.getEmail().equals("") || cliente.getDireccionCompleta().equals("") ||
-				cliente.getPassword().equals("") || cliente.getTelefono().equals("") || cliente.getPasswordDoble().equals(""))
+	public void create(@RequestBody Cliente cliente) throws Exception {
+		// MANTENIMIENTO
+		// Comprueba que el formulario está completo
+		if (cliente.getNombre().equals("") || cliente.getApellidos().equals("") || cliente.getNIF().equals("")
+				|| cliente.getEmail().equals("") || cliente.getDireccionCompleta().equals("")
+				|| cliente.getPassword().equals("") || cliente.getTelefono().equals("")
+				|| cliente.getPasswordDoble().equals(""))
 			throw new Exception("Faltan campos por rellenar");
-		
-		//Comprueba la seguridad de la contraseña
-		if(!cliente.contraseniaSegura(cliente.getPassword()))
-			throw new Exception("La contraseña debe tener al menos 8 caracteres, mayusculas, minusculas y al menos un número");
-		
-		//Comprueba que ha escrito la misma contraseña
-		if(!cliente.getPassword().equalsIgnoreCase(cliente.getPasswordDoble()))
+
+		// Comprueba la seguridad de la contraseña
+		if (!cliente.contraseniaSegura(cliente.getPassword()))
+			throw new Exception(
+					"La contraseña debe tener al menos 8 caracteres, mayusculas, minusculas y al menos un número");
+
+		// Comprueba que ha escrito la misma contraseña
+		if (!cliente.getPassword().equalsIgnoreCase(cliente.getPasswordDoble()))
 			throw new Exception("Las contraseñas no coinciden");
-		
-		//Comprueba que el email es válido
-		if(!cliente.formatoCorreoCorrecto(cliente.getEmail()))
+
+		// Comprueba que el email es válido
+		if (!cliente.formatoCorreoCorrecto(cliente.getEmail()))
 			throw new Exception("El correo electronico no es valido");
-		
-		//Comprueba que el email no exista ya
+
+		// Comprueba que el email no exista ya
 		Optional<Cliente> compruebaSiExiste = clienteRepository.findByemail(cliente.getEmail());
-		
-		//Comprueba que el correo ya esté en la bbdd
-		if(compruebaSiExiste.isPresent())
+
+		// Comprueba que el correo ya esté en la bbdd
+		if (compruebaSiExiste.isPresent())
 			throw new Exception("Este correo ya está registrado");
-		
-		//Comprueba el nif
-		if(!cliente.comprobarNif(cliente.getNIF()))
+
+		// Comprueba el nif
+		if (!cliente.comprobarNif(cliente.getNIF()))
 			throw new Exception("El NIF no es valido");
-		
-		//Comprueba el teléfono
-		if(!cliente.telefonoValido(cliente.getTelefono()))
+
+		// Comprueba el teléfono
+		if (!cliente.telefonoValido(cliente.getTelefono()))
 			throw new Exception("El telefono no es valido");
-		
-		//No hay errores, entonces codifica la contraseña y guarda en BBDD
+
+		// No hay errores, entonces codifica la contraseña y guarda en BBDD
 		cliente.setPassword(BCrypt.hashpw(cliente.getPassword(), BCrypt.gensalt()));
 		cliente.setPasswordDoble(cliente.getPassword());
-		
+
 		clienteRepository.insert(cliente);
-			
+
 	}
 
 	/*
-	* 
-	*
-	* Method name:loginUser
-	* Description of the Method: se encarga de comprobar si el email y la contraseña introducidos pertenece a un administrador, un cliente o un rider de la base de datos
-	* Calling arguments: dos strings, el email y la contraseña (Son el email y la contraseña que queremos comprobar en la base de datos)
-	* Return value: un JsonObject
-	* Required Files: Tabla clientes, administradores y riders de MongoDB
-	*
-	*
-	*/
+	 * 
+	 *
+	 * Method name:loginUser Description of the Method: se encarga de comprobar si
+	 * el email y la contraseña introducidos pertenece a un administrador, un
+	 * cliente o un rider de la base de datos Calling arguments: dos strings, el
+	 * email y la contraseña (Son el email y la contraseña que queremos comprobar en
+	 * la base de datos) Return value: un JsonObject Required Files: Tabla clientes,
+	 * administradores y riders de MongoDB
+	 *
+	 *
+	 */
 	@PostMapping("/login")
 	public
-	JsonObject loginUser(@RequestBody Cliente cliente) throws Exception {
+	JSONObject loginUser(@RequestBody Cliente cliente) throws Exception {
 		//MANTENIMIENTO
 		//Ahora devuelve un token para la seguridad
 		String token = "";
+		JSONObject jso = new JSONObject();
 		boolean esClienteLogin = false;
 		boolean esRiderLogin = false;
 		boolean esAdminLogin = false;
+		boolean esAsistenteLogin = false,
 		//Ahora buscamos clientes por email, que pueden o no estar
 		Optional<Cliente> clienteEncontrado;
 		Optional<Administrador> adminEncontrado;
 		Optional<Rider> riderEncontrado;
-		
+		Optional<Asistente> asistenteEncontrado;
 		//Comprueba que el formulario ha sido rellenado
 		if(cliente.getEmail().isEmpty() || cliente.getPassword().isEmpty())
 			throw new Exception("Completa los campos");
@@ -120,6 +126,7 @@ public class AuthService {
 		clienteEncontrado = clienteRepository.findByemail(cliente.getEmail());
 		adminEncontrado = adminRepository.findByEmail(cliente.getEmail());
 		riderEncontrado = riderRepository.findByEmail(cliente.getEmail());
+		asistenteEncontrado = asistenteRepository.findByEmail(cliente.getEmail());
 		
 		//Comprueba si no hay ningún posible logIn presente
 		if(!clienteEncontrado.isPresent() && !adminEncontrado.isPresent() && !riderEncontrado.isPresent())
@@ -134,6 +141,9 @@ public class AuthService {
 		
 		if(riderEncontrado.isPresent())
 			esRiderLogin = true;
+		
+		if(asistenteEncontrado.isPresent())
+			esAsistenteLogin = true;
 		
 		//Si es tipo cliente...
 		if(esClienteLogin) {
@@ -161,9 +171,12 @@ public class AuthService {
 			token = "clienteToken";
 			
 			//Construye la respuesta
-			return new JsonObject("{\"respuesta\":\"clienteLogin\",\"idCliente\":\""+
-									clienteEncontrado.get().getId()+"\",\"token\":\""+ token
-									+"\",\"nombre\":\""+ clienteEncontrado.get().getNombre()+ "\"}");
+			jso.put("respuesta", "clienteLogin");
+			jso.put("idCliente", clienteEncontrado.get().getId());
+			jso.put("token", token);
+			jso.put("nombre", clienteEncontrado.get().getNombre());
+			jso.put("email", clienteEncontrado.get().getEmail());
+			return jso;
 			}
 		
 		//Si es tipo Rider...
@@ -192,9 +205,12 @@ public class AuthService {
 			token = "riderToken";
 			
 			//Construye la respuesta
-			return new JsonObject("{\"respuesta\":\"riderLogin\",\"idRider\":\""+
-									riderEncontrado.get().getId()+"\",\"token\":\""+ token
-									+"\",\"nombre\":\""+ riderEncontrado.get().getNombre()+ "\"}");
+			jso.put("respuesta", "riderLogin");
+			jso.put("idRider", riderEncontrado.get().getId());
+			jso.put("token", token);
+			jso.put("nombre", riderEncontrado.get().getNombre());
+			jso.put("email", riderEncontrado.get().getEmail());
+			return jso;
 			}
 		
 		//Si es admin...
@@ -223,10 +239,47 @@ public class AuthService {
 			token = "adminToken";
 			
 			//Construye la respuesta
-			return new JsonObject("{\"respuesta\":\"adminLogin\",\"idAdmin\":\""+
-					adminEncontrado.get().getId()+"\",\"token\":\""+ token +"\",\"nombre\":\""+ 
-					adminEncontrado.get().getNombre() + "\"}");
+			jso.put("respuesta", "adminLogin");
+			jso.put("idAdmin", adminEncontrado.get().getId());
+			jso.put("token", token);
+			jso.put("nombre", adminEncontrado.get().getNombre());
+			jso.put("email", adminEncontrado.get().getEmail());
+			return jso;
 			}
+		
+		//Si es admin...
+			if(esAsistenteLogin) {
+					
+				//Comprueba que no esta bloqueado
+				if(asistenteEncontrado.get().getIntentos() <= 0 || !asistenteEncontrado.get().isCuentaActiva())
+					throw new Exception("asistente Blocked");
+					
+				//Comprueba que coincide la contraseña, si no resta 1 intento
+				if(!BCrypt.checkpw(cliente.getPassword(), asistenteEncontrado.get().getPassword())) {
+					asistenteEncontrado.get().setIntentos(asistenteEncontrado.get().getIntentos() - 1);
+						
+					if(asistenteEncontrado.get().getIntentos() <= 0)
+						asistenteEncontrado.get().setCuentaActiva(false);
+						
+					asistenteRepository.save(asistenteEncontrado.get());
+					throw new Exception(errorContraseña);
+					}
+					
+				//Es correcta la contraseña...
+				asistenteEncontrado.get().setIntentos(5);
+				asistenteRepository.save(asistenteEncontrado.get());
+					
+				//Genera token de admin para la respuesta
+				token = "asistenteToken";
+					
+				//Construye la respuesta
+				jso.put("respuesta", "asistenteLogin");
+				jso.put("idAsistente", asistenteEncontrado.get().getId());
+				jso.put("token", token);
+				jso.put("nombre", asistenteEncontrado.get().getNombre());
+				jso.put("email", asistenteEncontrado.get().getEmail());
+				return jso;
+				}
 		
 		throw new Exception("Error en el LogIn. No se pudo loggear");
 		
