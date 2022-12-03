@@ -10,5 +10,5 @@ import com.TIComoApp.TIComo.model.Asistente;
 
 
 public interface AsistenteRepository extends MongoRepository<Asistente,String>{
-	Optional<Asistente> findByemail(String email);
+	Optional<Asistente> findByEmail(String email);
 }

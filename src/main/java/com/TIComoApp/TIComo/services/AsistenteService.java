@@ -34,7 +34,7 @@ public class AsistenteService {
 		if(!asistente.formatoCorreoCorrecto(asistente.getEmail()))
 			throw new Exception("El correo electronico no es valido");
 		
-		Optional<Asistente> compruebaSiExiste=asistenteRepository.findByemail(asistente.getEmail());
+		Optional<Asistente> compruebaSiExiste=asistenteRepository.findByEmail(asistente.getEmail());
 		
 		if(compruebaSiExiste.isPresent())
 			throw new Exception("Este correo ya está registrado");
@@ -57,7 +57,7 @@ public class AsistenteService {
 
 
 	public Optional<Asistente> findByEmail(String email) {
-		return asistenteRepository.findByemail(email);
+		return asistenteRepository.findByEmail(email);
 	}
 
 

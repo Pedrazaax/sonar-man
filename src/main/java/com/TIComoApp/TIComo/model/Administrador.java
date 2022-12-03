@@ -27,8 +27,8 @@ public class Administrador extends Usuario{
 	private String zona;
 	
 	//Constructor
-	public Administrador(String id, String nombre, String apellidos, String email, String password,String passwordDoble, String zona) {
-		super(id, nombre, apellidos, email, password,passwordDoble);
+	public Administrador(String id, String nombre, String apellidos, String email, String password,String passwordDoble, String zona, boolean cuentaActiva,int intentos) {
+		super(id, nombre, apellidos, email, password,passwordDoble, cuentaActiva, intentos);
 		this.zona = zona;
 	}
 	public Administrador(){

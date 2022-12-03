@@ -102,7 +102,7 @@ public class AdminController {
 			return adminRepository.save(admin);
 		}
 		else {
-			return new Administrador(ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD);
+			return new Administrador(ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,false,0);
 		}
 	}
 	
@@ -132,7 +132,7 @@ public class AdminController {
 			return adminRepository.save(adminFromDB);
 		}
 		else {
-			return new Administrador(ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD);
+			return new Administrador(ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,false,0);
 		}
 		
 		

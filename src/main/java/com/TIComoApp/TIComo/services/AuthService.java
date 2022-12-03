@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.TIComoApp.TIComo.model.Administrador;
+import com.TIComoApp.TIComo.model.Asistente;
 import com.TIComoApp.TIComo.model.Cliente;
 import com.TIComoApp.TIComo.model.Rider;
 import com.TIComoApp.TIComo.repository.AdministradorRepository;
+import com.TIComoApp.TIComo.repository.AsistenteRepository;
 import com.TIComoApp.TIComo.repository.ClienteRepository;
 import com.TIComoApp.TIComo.repository.RiderRepository;
 import org.json.JSONObject;
@@ -112,7 +114,8 @@ public class AuthService {
 		boolean esClienteLogin = false;
 		boolean esRiderLogin = false;
 		boolean esAdminLogin = false;
-		boolean esAsistenteLogin = false,
+		boolean esAsistenteLogin = false;
+		
 		//Ahora buscamos clientes por email, que pueden o no estar
 		Optional<Cliente> clienteEncontrado;
 		Optional<Administrador> adminEncontrado;

@@ -31,8 +31,8 @@ public class Cliente extends Usuario{
 	
 	//Constructor
 	public Cliente(String id, String nombre, String apellidos, String email, String password,String passwordDoble, String NIF,
-			String direccionCompleta, String telefono) {
-		super(id, nombre, apellidos, email, password,passwordDoble);
+			String direccionCompleta, String telefono, boolean cuentaActiva,int intentos) {
+		super(id, nombre, apellidos, email, password,passwordDoble, cuentaActiva, intentos);
 		this.NIF = NIF;
 		this.direccionCompleta = direccionCompleta;
 		this.telefono = telefono;
