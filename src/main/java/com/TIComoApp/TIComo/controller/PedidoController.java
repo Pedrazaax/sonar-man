@@ -62,12 +62,12 @@ public class PedidoController {
 	
 	@PostMapping("obtenerPedidosCliente")
 	public
-	List<Pedido> obtenerPedidos(@RequestBody String id) {
+	List<Pedido> obtenerPedidos(@RequestBody String idCliente) {
 		//MANTENIMIENTO
 		try {
-			if(id.isEmpty())
+			if(idCliente.isEmpty())
 				throw new Exception("Inicie sesión");
-			return pedidosServ.findByidCliente(id);
+			return pedidosServ.findByidCliente(idCliente);
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN,e.getMessage());
 		}

@@ -70,9 +70,9 @@ public class PlatoController {
 	*
 	*/
 	
-	@GetMapping("/{id}")
+	@PostMapping("/platoPorId")
 	public
-	Optional<Plato> obtenerPlato(@PathVariable String id) {
+	Optional<Plato> obtenerPlato(@RequestBody String id) {
 		return platoRepository.findById(id);
 		
 	}
