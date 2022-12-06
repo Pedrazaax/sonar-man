@@ -92,9 +92,8 @@ public class PedidoController {
 	Pedido create(@RequestBody Pedido pedido) {
 		
 		try {
-			if(pedido.getNombrePlato().isEmpty() || pedido.getNombreRestaurante().isEmpty() || 
-					pedido.getIdCliente().isEmpty() || pedido.getCantidadPlato() <= 0 || pedido.getIdEntrega().isEmpty()
-					|| pedido.getPrecioPlato() <= 0 || pedido.getPrecioTotal()<= 0)
+			if(pedido.getNombrePlato().isEmpty() || pedido.getCantidadPlato() <= 0
+					|| pedido.getPrecioPlato() <= 0)
 					throw new Exception("Hay un error con el pedido");
 			return pedidosServ.save(pedido);
 		} catch (Exception e) {

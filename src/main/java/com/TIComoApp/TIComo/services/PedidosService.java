@@ -35,8 +35,12 @@ public class PedidosService {
 	
 	public void checkMethod(Entrega entrega) throws Exception {
 		
-		for (Field f : entrega.getClass().getDeclaredFields()) {
+		for (Field f : entrega.getClass().getDeclaredFields()) {			
+			if (f.getName().equals("id")) {
+		        continue;
+		    }
 			f.setAccessible(true);
+
 			if(Objects.isNull(f.get(entrega)))
 				throw new Exception("Error en la entrega");		
 		}
@@ -45,7 +49,12 @@ public class PedidosService {
 	public void checkMethod(Pedido pedido) throws Exception {
 		
 		for (Field f : pedido.getClass().getDeclaredFields()) {
+			
+			if (f.getName().equals("id")) {
+		        continue;
+		    }
 			f.setAccessible(true);
+
 			if(Objects.isNull(f.get(pedido)))
 				throw new Exception("Error en el pedido");		
 		}

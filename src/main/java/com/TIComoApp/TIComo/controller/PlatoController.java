@@ -72,8 +72,14 @@ public class PlatoController {
 	
 	@PostMapping("/platoPorId")
 	public
-	Optional<Plato> obtenerPlato(@RequestBody String id) {
-		return platoRepository.findById(id);
+	Optional<Plato> obtenerPlato(@RequestBody String id) throws Exception {
+		Optional<Plato> p = platoRepository.findById(id);
+		
+		if(!p.isPresent())
+			throw new Exception("No existe plato para ese id");
+		
+		
+		return p;
 		
 	}
 	/*
