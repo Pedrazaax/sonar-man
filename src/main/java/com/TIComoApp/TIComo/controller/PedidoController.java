@@ -116,7 +116,7 @@ public class PedidoController {
 	@PostMapping("pedidoRealizado")
 	public
 	Pedido pedidoRealizado(@RequestBody Map<String,String> mapita) throws Exception {
-		
+			//MANTENIMIENTO
 			try {
 				if(mapita.get("idPedido").isEmpty())
 					throw new Exception("id no válido");
@@ -155,6 +155,7 @@ public class PedidoController {
 		try {
 			if(id.isEmpty())
 				throw new Exception("No se pudo borrar por ese id");
+			
 			pedidosServ.deletePedido(id);
 		}catch(Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
@@ -162,6 +163,22 @@ public class PedidoController {
 		
 		
 
+	}
+
+	public void modificarPedido(Pedido pedido) {
+		//MANTENIMIENTO
+		try {
+			
+			if(pedido.getNombrePlato().isEmpty() || pedido.getCantidadPlato() <= 0
+					|| pedido.getPrecioPlato() <= 0)
+					throw new Exception("Hay un error con el pedido");
+			
+			pedidosServ.modificarPedido(pedido);
+			
+		}catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+		
 	}
 	
 

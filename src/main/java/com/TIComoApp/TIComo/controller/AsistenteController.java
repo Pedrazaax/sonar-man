@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.TIComoApp.TIComo.model.Administrador;
 import com.TIComoApp.TIComo.model.Asistente;
+import com.TIComoApp.TIComo.model.Pedido;
 import com.TIComoApp.TIComo.services.AsistenteService;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 //MANTENIMIENTO
@@ -28,12 +29,34 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 @RestController
 @RequestMapping("ticomo/asistente")
 public class AsistenteController {
-	
+	//MANTENIMIENTO
 	@Autowired
 	private AsistenteService asistenteService;
 	
+	@Autowired
+	private PedidoController controladorPedidos;
 	
 	
+	
+	@PostMapping("/modificarPedido")
+	public void modificarPedido(@RequestBody Pedido pedido) {
+		//MANTENIMIENTO
+		try {
+			controladorPedidos.modificarPedido(pedido);
+		}catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}
+	
+	@PostMapping("/eliminarPedido")
+	public void eliminarPedido(@RequestBody Pedido pedido) {
+		//MANTENIMIENTO
+		try {
+			controladorPedidos.delete(pedido.getId());
+		}catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}
 	
 	@PostMapping("/register")
 	public void create(@RequestBody Asistente asistente) throws Exception {
@@ -42,7 +65,6 @@ public class AsistenteController {
 			if(asistente.getNombre().equals("")||asistente.getApellidos().equals("") || asistente.getEmail().equals("")
 					|| asistente.getTelefono().equals("")||asistente.getPassword().equals("")|| asistente.getPasswordDoble().equals(""))
 				throw new Exception("Formulario vacío");
-			
 			
 			asistenteService.create(asistente);
 			

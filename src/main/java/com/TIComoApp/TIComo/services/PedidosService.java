@@ -90,4 +90,16 @@ public class PedidosService {
 		pedidosRepo.delete(p);
 		
 	}
+
+	public void modificarPedido(Pedido pedido) throws Exception {
+		
+		Optional<Pedido> p = pedidosRepo.findById(pedido.getId());
+		
+		if(!p.isPresent())
+			throw new Exception("Imposible modificar, no existe el pedido");
+		
+		pedidosRepo.save(pedido);
+		
+		
+	}
 }
