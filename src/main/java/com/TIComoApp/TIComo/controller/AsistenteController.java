@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.TIComoApp.TIComo.model.Administrador;
 import com.TIComoApp.TIComo.model.Asistente;
+import com.TIComoApp.TIComo.model.Cliente;
 import com.TIComoApp.TIComo.model.Pedido;
 import com.TIComoApp.TIComo.services.AsistenteService;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -37,6 +38,20 @@ public class AsistenteController {
 	private PedidoController controladorPedidos;
 	
 	
+	@PostMapping("/listaUsuarios")
+    public List<Cliente> listarUsuarios() throws Exception {
+        try {
+            List<Cliente> listaUsuarios = asistenteService.listarUsuarios();
+            return listaUsuarios;
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+	
+	  @PostMapping("/crearPedidoAsistente")
+	    public void crearPedido(@RequestBody Pedido pedido) {
+	        controladorPedidos.create(pedido);
+	    }
 	
 	@PostMapping("/modificarPedido")
 	public void modificarPedido(@RequestBody Pedido pedido) {
