@@ -38,6 +38,15 @@ public class AsistenteController {
 	private PedidoController controladorPedidos;
 	
 	
+	@PostMapping("/listarPedidos")
+    public List<Pedido> listarPedidosParaCliente(@RequestBody String idCliente) {
+		try {
+            return controladorPedidos.obtenerPedidos(idCliente);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+	
 	@PostMapping("/listaUsuarios")
     public List<Cliente> listarUsuarios() throws Exception {
         try {
