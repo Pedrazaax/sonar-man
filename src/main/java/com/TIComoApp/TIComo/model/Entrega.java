@@ -55,9 +55,11 @@ public class Entrega {
 	private String nombreRestaurante;
 	
 	//Constructor
-	public Entrega(String id, String idCliente,String nombreCliente, String apellidosCliente, String direccion, String telefonoCliente, String pedidosRealizados, double precioTotal, String nombreRestaurante) {
+	public Entrega(String idCliente,String nombreCliente, 
+			String apellidosCliente, String direccion, 
+			String telefonoCliente, String pedidosRealizados, 
+			double precioTotal, String nombreRestaurante) {
 		super();
-		this.id = id;
 		this.idRider = "";
 		this.idCliente = idCliente;
 		this.nombreCliente = nombreCliente;
@@ -71,9 +73,6 @@ public class Entrega {
 		this.nombreRestaurante = nombreRestaurante;
 		DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss z");
 		this.fechayhora = dateFormat.format(new Date());
-	}
-	public Entrega() {
-		
 	}
 
 	//Getters, Setters y toString

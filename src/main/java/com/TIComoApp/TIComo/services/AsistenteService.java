@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 
 import com.TIComoApp.TIComo.model.Asistente;
+import com.TIComoApp.TIComo.model.Cliente;
 import com.TIComoApp.TIComo.repository.AsistenteRepository;
+import com.TIComoApp.TIComo.repository.ClienteRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +20,17 @@ public class AsistenteService {
 	@Autowired
 	private AsistenteRepository asistenteRepository;
 	
+	@Autowired
+	private ClienteRepository clienteRepo;
 	
+	public List<Cliente> listarUsuarios() throws Exception {
+        List<Cliente> lista = clienteRepo.findAll();
+        if (lista.size() == 0) {
+            throw new Exception("No hay usuarios en la base de datos.");
+        } else {
+            return lista;
+        }
+    }
 	
 	public void create(Asistente asistente) throws Exception {
 		if(asistente.getNombre().equals("")||asistente.getApellidos().equals("") || asistente.getEmail().equals("")

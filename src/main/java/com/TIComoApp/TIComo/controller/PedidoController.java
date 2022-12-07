@@ -12,6 +12,7 @@ package com.TIComoApp.TIComo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,21 +27,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.TIComoApp.TIComo.model.Cliente;
 import com.TIComoApp.TIComo.model.Entrega;
 import com.TIComoApp.TIComo.model.Pedido;
 import com.TIComoApp.TIComo.repository.PedidoRepository;
+import com.TIComoApp.TIComo.services.PedidosService;
+import com.mongodb.lang.NonNull;
 
 @CrossOrigin
 @RestController
 @RequestMapping("ticomo/pedidos")
 
 
-
+//MANTENIMIENTO
 public class PedidoController {	
+	
 	@Autowired
-	private PedidoRepository pedidoRepository;
+	private PedidosService pedidosServ;
 		
 	
 	
@@ -55,17 +60,18 @@ public class PedidoController {
 	*
 	*/
 	
-	@GetMapping("/{id}")
+	@PostMapping("obtenerPedidosCliente")
 	public
-	List<Pedido> obtenerPedidos(@PathVariable String id) {
-		List<Pedido> pedidos = pedidoRepository.findAll();
-		List<Pedido> pedidosCliente = new ArrayList<Pedido>();		
-		for(int i=0;i<pedidos.size();i++) {
-			if(pedidos.get(i).getIdCliente().equals(id)) {
-				pedidosCliente.add(pedidos.get(i));
-			}
+	List<Pedido> obtenerPedidos(@RequestBody String idCliente) {
+		//MANTENIMIENTO
+		try {
+			if(idCliente.isEmpty())
+				throw new Exception("Inicie sesión");
+			return pedidosServ.findByidCliente(idCliente);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN,e.getMessage());
 		}
-		return pedidosCliente;
+		
 		
 	}
 	
@@ -81,11 +87,19 @@ public class PedidoController {
 	*
 	*/
 	
-	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("")
+	@PostMapping("crearPedido")
 	public
 	Pedido create(@RequestBody Pedido pedido) {
-		return pedidoRepository.save(pedido);
+		
+		try {
+			if(pedido.getNombrePlato().isEmpty() || pedido.getCantidadPlato() <= 0
+					|| pedido.getPrecioPlato() <= 0)
+					throw new Exception("Hay un error con el pedido");
+			return pedidosServ.save(pedido);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN,e.getMessage());
+		}
+		
 	}
 	/*
 	* 
@@ -99,13 +113,26 @@ public class PedidoController {
 	*
 	*/
 	
-	@PutMapping("/{id}")
+	@PostMapping("pedidoRealizado")
 	public
-	Pedido pedidoRealizado(@PathVariable String id,@RequestBody Entrega entrega) {
-			Pedido pedidoFromDB = pedidoRepository.findById(id).orElseThrow(RuntimeException::new);		
-			pedidoFromDB.setPedidoRealizado(true);	
-			pedidoFromDB.setIdEntrega(entrega.getId());
-			return pedidoRepository.save(pedidoFromDB);
+	Pedido pedidoRealizado(@RequestBody Map<String,String> mapita) throws Exception {
+			//MANTENIMIENTO
+			try {
+				if(mapita.get("idPedido").isEmpty())
+					throw new Exception("id no válido");
+				
+				String id = mapita.get("idPedido");
+				mapita.remove("idPedido");
+				Entrega e = new Entrega(mapita.get("idCliente"),mapita.get("nombreCliente")
+						,mapita.get("apellidosCliente"),mapita.get("direccion"),mapita.get("telefonoCliente")
+						,mapita.get("pedidosRealizados")
+						,Double.parseDouble(mapita.get("precioTotal")),mapita.get("nombreRestaurante"));
+				
+				pedidosServ.checkMethod(e);
+				return pedidosServ.pedidoRealizado(id,e);
+			}catch(Exception e) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
+			}
 	}
 	
 	
@@ -120,13 +147,38 @@ public class PedidoController {
 	*
 	*
 	*/
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping("/{id}")
+	@PostMapping("deletePedido")
 	public
-	void delete(@PathVariable String id) {
-		Pedido pedido = pedidoRepository.findById(id).orElseThrow(RuntimeException::new);
-		pedidoRepository.delete(pedido);
+	void delete(@RequestBody String id) {
+		
+		
+		try {
+			if(id.isEmpty())
+				throw new Exception("No se pudo borrar por ese id");
+			
+			pedidosServ.deletePedido(id);
+		}catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
+		}
+		
+		
 
+	}
+
+	public void modificarPedido(Pedido pedido) {
+		//MANTENIMIENTO
+		try {
+			
+			if(pedido.getNombrePlato().isEmpty() || pedido.getCantidadPlato() <= 0
+					|| pedido.getPrecioPlato() <= 0)
+					throw new Exception("Hay un error con el pedido");
+			
+			pedidosServ.modificarPedido(pedido);
+			
+		}catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+		
 	}
 	
 
