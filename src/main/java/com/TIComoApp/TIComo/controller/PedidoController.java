@@ -60,9 +60,8 @@ public class PedidoController {
 	*
 	*/
 	
-	@PostMapping("obtenerPedidosCliente")
-	public
-	List<Pedido> obtenerPedidos(@RequestBody String idCliente) {
+	@PostMapping("/obtenerPedidosCliente")
+	public List<Pedido> obtenerPedidos(@RequestBody String idCliente) {
 		//MANTENIMIENTO
 		try {
 			if(idCliente.isEmpty())

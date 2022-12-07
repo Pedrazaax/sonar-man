@@ -82,6 +82,19 @@ public class PlatoController {
 		return p;
 		
 	}
+	
+	/*
+	 * MANTENIMIENTO Creamos un metodo get para consultar los platos de un
+	 * restaurante en específico según su nombre. Return value: lista de platos del
+	 * restaurante.
+	 */
+
+	@GetMapping("/restaurante/{nombreRestaurante}")
+	public List<Plato> obtenerPlatosRest(@PathVariable String nombreRestaurante) {
+		return platoRepository.findBynombreRestaurante(nombreRestaurante);
+	}
+	
+	
 	/*
 	* 
 	*
