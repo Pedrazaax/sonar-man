@@ -13,6 +13,7 @@ package com.TIComoApp.TIComo.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -164,8 +165,17 @@ public class PedidoController {
 
 	}
 
-	public void modificarPedido(Pedido pedido) {
-		//MANTENIMIENTO
+	/*
+	* MANTENIMIENTO
+	*
+	* Method name: modificarPedido
+	* Este método se se encarga de actualizar un pedido.
+	*
+	*
+	*/
+	@PutMapping(value= "/actualizar")
+	public void modificarPedido(@RequestBody Pedido pedido) {
+	
 		try {
 			
 			if(pedido.getNombrePlato().isEmpty() || pedido.getCantidadPlato() <= 0
@@ -180,5 +190,13 @@ public class PedidoController {
 		
 	}
 	
+	@GetMapping(value="/{id}")
+	public Pedido findByIdPedido(@PathVariable String id){
+		try {
+			return pedidosServ.findById(id);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}
 
 }

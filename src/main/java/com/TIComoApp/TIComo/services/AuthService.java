@@ -138,7 +138,7 @@ public class AuthService {
 		asistenteEncontrado = asistenteRepository.findByEmail(cliente.getEmail());
 		
 		//Comprueba si no hay ningún posible logIn presente
-		if(!clienteEncontrado.isPresent() && !adminEncontrado.isPresent() && !riderEncontrado.isPresent())
+		if(!clienteEncontrado.isPresent() && !adminEncontrado.isPresent() && !riderEncontrado.isPresent() && !asistenteEncontrado.isPresent())
 			throw new Exception("El correo no existe");
 		
 		//Para el login que encuentra, confirma su tipo
