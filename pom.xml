@@ -82,6 +82,7 @@
 				<configuration>
 					<!-- any configuration options here -->
 				</configuration>
+				
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
