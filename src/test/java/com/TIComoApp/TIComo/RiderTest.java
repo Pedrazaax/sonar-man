@@ -1,20 +1,20 @@
-package com.TIComoApp.TIComo;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import com.TIComoApp.TIComo.model.Administrador;
-import com.TIComoApp.TIComo.model.Rider;
-
-
-
-class RiderTest {
-
+//package com.TIComoApp.TIComo;
+//
+//import static org.junit.jupiter.api.Assertions.*;
+//
+//import org.junit.jupiter.api.AfterAll;
+//import org.junit.jupiter.api.AfterEach;
+//import org.junit.jupiter.api.BeforeAll;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+//
+//import com.TIComoApp.TIComo.model.Administrador;
+//import com.TIComoApp.TIComo.model.Rider;
+//
+//
+//
+//class RiderTest {
+//
 //	@Test
 //	void testRider() {
 //		Rider ejemplo=new Rider("1","Facundo","Corral","FCorral@gmail.com","12345678Aa","01823971J", "Coche", "1827 BVC", "B");
@@ -187,5 +187,5 @@ class RiderTest {
 //		Rider ejemplo2=new Rider("1","Facundo","Corral","FCorral@gmail.com","12345678Aa","01823971J", "Coche", "1827 BVC", "B");		
 //		assertEquals(ejemplo.contraseniaSegura(ejemplo.getPassword()),ejemplo2.contraseniaSegura(ejemplo2.getPassword()));
 //	}
-
-}
+//
+//}

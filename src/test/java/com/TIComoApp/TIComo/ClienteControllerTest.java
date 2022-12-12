@@ -1,28 +1,28 @@
-package com.TIComoApp.TIComo;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
-
-import org.junit.Rule;
-import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import com.TIComoApp.TIComo.controller.ClienteController;
-import com.TIComoApp.TIComo.model.Cliente;
-import com.TIComoApp.TIComo.repository.ClienteRepository;
-@SpringBootTest
-class ClienteControllerTest {
-
-	 @Autowired
-	   private ClienteRepository clienteRepository;
-	   @Autowired
-	   private ClienteController clientecontroller;
-	   
-
-
+//package com.TIComoApp.TIComo;
+//
+//import static org.junit.jupiter.api.Assertions.*;
+//
+//import java.util.List;
+//
+//import org.junit.Rule;
+//import org.junit.jupiter.api.Test;
+//import org.junit.rules.ExpectedException;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//import com.TIComoApp.TIComo.controller.ClienteController;
+//import com.TIComoApp.TIComo.model.Cliente;
+//import com.TIComoApp.TIComo.repository.ClienteRepository;
+//@SpringBootTest
+//class ClienteControllerTest {
+//
+//	 @Autowired
+//	   private ClienteRepository clienteRepository;
+//	   @Autowired
+//	   private ClienteController clientecontroller;
+//	   
+//
+//
 //	   @Rule
 //	   public ExpectedException exception = ExpectedException.none();
 //	   @Test
@@ -64,28 +64,28 @@ class ClienteControllerTest {
 //
 //
 //		   }
-		@Test
-		void testD() {
-			List<Cliente> list=clientecontroller.index();
-			assertNotEquals(0,list.size());
-		}
-		
-			
-			@Test
-		   void testE(){
-		       clientecontroller.delete("1B");
-
-
-
-		   }
-			
-			@Test
-			   void testobtenerCliente(){
-				 
-			       assertNotEquals(null,clientecontroller.obtenerCliente("63624df247774a5c1af31a30"));
-			       
-
-
-
-			   }
-}
+//		@Test
+//		void testD() {
+//			List<Cliente> list=clientecontroller.index();
+//			assertNotEquals(0,list.size());
+//		}
+//		
+//			
+//			@Test
+//		   void testE(){
+//		       clientecontroller.delete("1B");
+//
+//
+//
+//		   }
+//			
+//			@Test
+//			   void testobtenerCliente(){
+//				 
+//			       assertNotEquals(null,clientecontroller.obtenerCliente("63624df247774a5c1af31a30"));
+//			       
+//
+//
+//
+//			   }
+//}
