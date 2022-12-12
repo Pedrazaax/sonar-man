@@ -33,3 +33,13 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
+- script: |
+    npm install -g firebase-tools
+    firebase login:ci
+  displayName: 'Install Firebase CLI and login'
+
+- script: |
+    cd $(Build.SourcesDirectory)
+    firebase deploy
+  displayName: 'Deploy to Firebase'
+
