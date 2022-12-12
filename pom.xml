@@ -14,7 +14,7 @@
 <description>TIComo backend</description>
 <properties>
 <java.version>1.8</java.version>
-<sonar.organization>antoniodo2001</sonar.organization>
+<sonar.organization>pedraza</sonar.organization>
 <sonar.host.url>https://sonarcloud.io</sonar.host.url>
  <maven.compiler.source>1.8</maven.compiler.source>
  <maven.compiler.target>1.8</maven.compiler.target>
