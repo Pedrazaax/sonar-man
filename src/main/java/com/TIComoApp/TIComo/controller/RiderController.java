@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * Class Name: RiderController
+s * Class Name: RiderController
  * Author/s name: Ángel García Consuegra Trujillo, José Miguel Tercero Valero, Antonio Domínguez Martín, Roberto Ortuño Blanco y Javier Familiar Gijón
  * Release/Creation date:
  * Class version: ultima version(21/11/2022)
@@ -12,6 +12,7 @@
 package com.TIComoApp.TIComo.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,9 +29,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.TIComoApp.TIComo.model.Cliente;
+import com.TIComoApp.TIComo.model.Entrega;
 import com.TIComoApp.TIComo.model.Rider;
+import com.TIComoApp.TIComo.repository.EntregaRepository;
 import com.TIComoApp.TIComo.repository.RiderRepository;
 
 @CrossOrigin
