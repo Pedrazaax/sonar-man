@@ -46,7 +46,68 @@ public class RiderController {
 	
 	@Autowired
 	private RiderRepository riderRepository;
-		
+	@Autowired
+	private EntregaRepository entregaRepository;
+
+	// MANTENIMIENTO
+	@GetMapping("/entregasListas")
+	public List<Entrega> listarEntregasListo() throws Exception {
+		try {
+			List<Entrega> entregas = entregaRepository.findAll();
+			if (entregas.isEmpty()) {
+				throw new Exception("No hay entregas.");
+			}
+			List<Entrega> entregasReparto = new ArrayList<Entrega>();
+			for (int i = 0; i < entregas.size(); i++) {
+				if (entregas.get(i).getEstado().equalsIgnoreCase("listo")) {
+					entregasReparto.add(entregas.get(i));
+				}
+			}
+			return entregasReparto;
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}
+
+	// MANTENIMIENTO
+	@GetMapping("/entregasEnReparto")
+	public List<Entrega> listarEntregasEnReparto() throws Exception {
+		try {
+			List<Entrega> entregas = entregaRepository.findAll();
+			if (entregas.isEmpty()) {
+				throw new Exception("No hay entregas.");
+			}
+			List<Entrega> entregasListas = new ArrayList<Entrega>();
+			for (int i = 0; i < entregas.size(); i++) {
+				if (entregas.get(i).getEstado().equalsIgnoreCase("reparto")) {
+					entregasListas.add(entregas.get(i));
+				}
+			}
+			return entregasListas;
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}
+
+	// MANTENIMIENTO
+	@GetMapping("/entregasEntregadas")
+	public List<Entrega> listarEntregasEntregadas() throws Exception {
+		try {
+			List<Entrega> entregas = entregaRepository.findAll();
+			if (entregas.isEmpty()) {
+				throw new Exception("No hay entregas.");
+			}
+			List<Entrega> entregasEntregado = new ArrayList<Entrega>();
+			for (int i = 0; i < entregas.size(); i++) {
+				if (entregas.get(i).getEstado().equalsIgnoreCase("entregado")) {
+					entregasEntregado.add(entregas.get(i));
+				}
+			}
+			return entregasEntregado;
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}	
 	
 	/*
 	* 
