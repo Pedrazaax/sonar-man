@@ -1,4 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -14,7 +15,7 @@
 	<description>TIComo backend</description>
 	<properties>
 		<java.version>1.8</java.version>
-		<sonar.organization>antoniodo2001</sonar.organization>
+		<sonar.organization>pedraza</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -204,5 +205,5 @@
 		</plugins>
 	</reporting>
 
-
 </project>
+
