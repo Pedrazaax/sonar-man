@@ -35,7 +35,6 @@ steps:
 
 - script: |
     npm install -g firebase-tools
-    npm audit fix --force
     cd $(Build.SourcesDirectory)
     firebase init
     firebase deploy --token '$(FIREBASE_TOKEN)'
