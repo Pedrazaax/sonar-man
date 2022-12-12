@@ -10,6 +10,8 @@
  */
 package com.TIComoApp.TIComo.repository;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +20,6 @@ import com.TIComoApp.TIComo.model.Pedido;
 @Repository
 public interface PedidoRepository extends MongoRepository<Pedido,String>{
 	
-	
+	List<Pedido> findByidCliente(String idCliente);
 
 }

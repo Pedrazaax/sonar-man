@@ -44,11 +44,11 @@ public class PlatoControllerTest {
        
       
       }
-   @Test
-   void testE() {
-       platocontroller.obtenerPlato("6362502047774a5c1af31a35");
-       
-      
-      }
+//   @Test
+//   void testE() {
+//       platocontroller.obtenerPlato("6362502047774a5c1af31a35");
+//       
+//      
+//      }
 
 }

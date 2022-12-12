@@ -70,12 +70,31 @@ public class PlatoController {
 	*
 	*/
 	
-	@GetMapping("/{id}")
+	@PostMapping("/platoPorId")
 	public
-	Optional<Plato> obtenerPlato(@PathVariable String id) {
-		return platoRepository.findById(id);
+	Optional<Plato> obtenerPlato(@RequestBody String id) throws Exception {
+		Optional<Plato> p = platoRepository.findById(id);
+		
+		if(!p.isPresent())
+			throw new Exception("No existe plato para ese id");
+		
+		
+		return p;
 		
 	}
+	
+	/*
+	 * MANTENIMIENTO Creamos un metodo get para consultar los platos de un
+	 * restaurante en específico según su nombre. Return value: lista de platos del
+	 * restaurante.
+	 */
+
+	@GetMapping("/restaurante/{nombreRestaurante}")
+	public List<Plato> obtenerPlatosRest(@PathVariable String nombreRestaurante) {
+		return platoRepository.findBynombreRestaurante(nombreRestaurante);
+	}
+	
+	
 	/*
 	* 
 	*

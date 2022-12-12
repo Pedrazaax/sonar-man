@@ -28,8 +28,6 @@ import lombok.Data;
 
 @Data
 public class Usuario {
-	@Id
-	private String id;
 	@NonNull
 	private String nombre;
 	@NonNull
@@ -39,90 +37,74 @@ public class Usuario {
 	@NonNull
 	private String password;
 	@NonNull
-	private boolean cuentaActiva;
+	private String passwordDoble;
+	@NonNull
+	private boolean cuentaActiva = true;
+	@NonNull
+	private int intentos = 5;
 
 
 
 	//Constructor
-	public Usuario(String id, String nombre, String apellidos, String email, String password) {
-		this.id = id;
+	public Usuario(String nombre, String apellidos, String email, String password,String passwordDoble,boolean cuentaActiva, int intentos) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
 		this.password = password;
-		this.cuentaActiva = true;
+		this.passwordDoble = passwordDoble;
+		this.cuentaActiva = cuentaActiva;
+		this.intentos = intentos;
 
 	}
 	public Usuario() {
 		
 	}
 
-
-
 	//Getters, Setters y toString
-	public String getId() {
-		return id;
+
+	public int getIntentos() {
+		return intentos;
 	}
-
-
-
-
-	public void setId(String id) {
-		this.id = id;
+	public void setIntentos(int intentos) {
+		this.intentos = intentos;
 	}
-
-
-
-
 	public String getNombre() {
 		return nombre;
 	}
-
-
-
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-
-
-
 	public String getApellidos() {
 		return apellidos;
 	}
-
-
-
 
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
 
-
-
-
 	public String getEmail() {
 		return email;
 	}
 
-
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-
-
 
 	public String getPassword() {
 		return password;
 	}
 
 
-
-
+	//MANTENIMIENTO -->
+	public String getPasswordDoble() {
+		return passwordDoble;
+	}
+	public void setPasswordDoble(String passwordDoble) {
+		this.passwordDoble = passwordDoble;
+	}// <--
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -131,6 +113,12 @@ public class Usuario {
 	}
     public void setCuentaActiva(boolean cuentaActiva) {
 		this.cuentaActiva = cuentaActiva;
+		
+		if(this.cuentaActiva) {
+			this.intentos = 5;
+		}else {
+			this.intentos = 0;
+		}
 	}
 
 
@@ -173,7 +161,7 @@ public class Usuario {
         // El email a validar
  
         Matcher mather = pattern.matcher(email);
- 
+        
         if (mather.find() == true) {
             return true;
         } else {

@@ -77,6 +77,12 @@ public class RestauranteController {
 		return restauranteRepository.findById(id);
 		
 	}
+	@PostMapping("/idPorNombre")
+	public
+	Optional<Restaurante> obtenerRestauranteN(@RequestBody String n) {
+		return restauranteRepository.findBynombre(n);
+		
+	}
 	/*
 	* 
 	*

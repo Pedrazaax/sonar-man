@@ -1,6 +1,6 @@
 /*********************************************************************
  *
- * Class Name: RiderController
+s * Class Name: RiderController
  * Author/s name: Ángel García Consuegra Trujillo, José Miguel Tercero Valero, Antonio Domínguez Martín, Roberto Ortuño Blanco y Javier Familiar Gijón
  * Release/Creation date:
  * Class version: ultima version(21/11/2022)
@@ -12,6 +12,7 @@
 package com.TIComoApp.TIComo.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,9 +29,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.TIComoApp.TIComo.model.Cliente;
+import com.TIComoApp.TIComo.model.Entrega;
 import com.TIComoApp.TIComo.model.Rider;
+import com.TIComoApp.TIComo.repository.EntregaRepository;
 import com.TIComoApp.TIComo.repository.RiderRepository;
 
 @CrossOrigin
@@ -46,7 +50,68 @@ public class RiderController {
 	
 	@Autowired
 	private RiderRepository riderRepository;
-		
+	@Autowired
+	private EntregaRepository entregaRepository;
+
+	// MANTENIMIENTO
+	@GetMapping("/entregasListas")
+	public List<Entrega> listarEntregasListo() throws Exception {
+		try {
+			List<Entrega> entregas = entregaRepository.findAll();
+			if (entregas.isEmpty()) {
+				throw new Exception("No hay entregas.");
+			}
+			List<Entrega> entregasReparto = new ArrayList<Entrega>();
+			for (int i = 0; i < entregas.size(); i++) {
+				if (entregas.get(i).getEstado().equalsIgnoreCase("listo")) {
+					entregasReparto.add(entregas.get(i));
+				}
+			}
+			return entregasReparto;
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}
+
+	// MANTENIMIENTO
+	@GetMapping("/entregasEnReparto")
+	public List<Entrega> listarEntregasEnReparto() throws Exception {
+		try {
+			List<Entrega> entregas = entregaRepository.findAll();
+			if (entregas.isEmpty()) {
+				throw new Exception("No hay entregas.");
+			}
+			List<Entrega> entregasListas = new ArrayList<Entrega>();
+			for (int i = 0; i < entregas.size(); i++) {
+				if (entregas.get(i).getEstado().equalsIgnoreCase("reparto")) {
+					entregasListas.add(entregas.get(i));
+				}
+			}
+			return entregasListas;
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}
+
+	// MANTENIMIENTO
+	@GetMapping("/entregasEntregadas")
+	public List<Entrega> listarEntregasEntregadas() throws Exception {
+		try {
+			List<Entrega> entregas = entregaRepository.findAll();
+			if (entregas.isEmpty()) {
+				throw new Exception("No hay entregas.");
+			}
+			List<Entrega> entregasEntregado = new ArrayList<Entrega>();
+			for (int i = 0; i < entregas.size(); i++) {
+				if (entregas.get(i).getEstado().equalsIgnoreCase("entregado")) {
+					entregasEntregado.add(entregas.get(i));
+				}
+			}
+			return entregasEntregado;
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+	}	
 	
 	/*
 	* 
@@ -103,16 +168,16 @@ public class RiderController {
 			String passwordRider = rider.getPassword();
 			rider.setPassword(BCrypt.hashpw(passwordRider, BCrypt.gensalt()));	
 			if(!rider.comprobarMatricula(rider.getMatricula())) {
-				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
+				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 			}
 			else if(!rider.formatoCorreoCorrecto(rider.getEmail())) {
-				return new Rider(EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR);
+				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 			}else {
 				return riderRepository.save(rider);
 			}
 		}
 		else {
-			return new Rider(ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD);
+			return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 		}
 	}
 	/*
@@ -142,16 +207,16 @@ public class RiderController {
 			riderFromDB.setValoracionMedia(rider.getValoracionMedia());
 			
 			if(!rider.comprobarMatricula(rider.getMatricula())) {
-				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
+				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 			}
 			else if(!rider.formatoCorreoCorrecto(rider.getEmail())) {
-				return new Rider(EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR,EMFORMERR);
+				return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 			}else {
 				return riderRepository.save(riderFromDB);
 			}
 		}
 		else {
-			return new Rider(ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD,ERRPWD);
+			return new Rider(ERRMATR,ERRMATR,ERRMATR,ERRMATR,ERRMATR,false,0,ERRMATR,ERRMATR,ERRMATR,ERRMATR);
 		}
 		
 		
@@ -172,7 +237,7 @@ public class RiderController {
 	@PutMapping("")
 	public
 	Rider desactivarActivarRider(@RequestBody Rider rider) {
-		Rider riderFromDB = riderRepository.findById(rider.getId()).orElseThrow(RuntimeException::new);
+		Rider riderFromDB = riderRepository.findById(rider.getNIF()).orElseThrow(RuntimeException::new);
 		riderFromDB.setCuentaActiva(rider.isCuentaActiva());
 		return riderRepository.save(riderFromDB);
 	}

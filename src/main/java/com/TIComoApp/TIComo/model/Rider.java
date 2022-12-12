@@ -10,6 +10,7 @@
  */
 package com.TIComoApp.TIComo.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mongodb.lang.NonNull;
@@ -21,7 +22,7 @@ import lombok.Data;
 @Document(collection = "riders")
 public class Rider extends Usuario{
 
-	@NonNull
+	@Id
 	private String NIF;
 	@NonNull
 	private String tipoVehiculo;
@@ -31,9 +32,10 @@ public class Rider extends Usuario{
 	private double valoracionMedia;
 	
 	//Constructor
-	public Rider(String id, String nombre, String apellidos, String email, String password, String NIF,
+	public Rider( String nombre, String apellidos, String email, String password,
+			String passwordDoble,boolean cuentaActiva, int intentos, String NIF,
 			String tipoVehiculo, String matricula, String carnet) {
-		super(id, nombre, apellidos, email, password);
+		super(nombre, apellidos, email, password,passwordDoble, cuentaActiva, intentos);
 		this.NIF = NIF;
 		this.tipoVehiculo = tipoVehiculo;
 		this.matricula = matricula;
