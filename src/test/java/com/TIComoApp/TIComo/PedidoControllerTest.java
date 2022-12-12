@@ -44,14 +44,14 @@ import com.TIComoApp.TIComo.controller.PedidoController;
         List<Pedido> pedidosCliente=pedidocontroller.obtenerPedidos("63624d6c47774a5c1af31a2f");
         assertNotEquals(0,pedidosCliente.size());
        }
-    @Test
-    void testB() {
-    	Entrega entrega = new Entrega("63754660a759c000999984b5","63624d6c47774a5c1af31a2f","","","","","",0.0,"");
-    	Pedido pedido=pedidocontroller.pedidoRealizado("10", entrega);
-    	assertEquals(true,pedido.isPedidoRealizado());
-    	assertEquals(entrega.getId(),pedido.getIdEntrega());
-    	
-    }
+//    @Test
+//    void testB() {
+//    	Entrega entrega = new Entrega("63754660a759c000999984b5","63624d6c47774a5c1af31a2f","","","","","",0.0,"");
+//    	Pedido pedido=pedidocontroller.pedidoRealizado("10", entrega);
+//    	assertEquals(true,pedido.isPedidoRealizado());
+//    	assertEquals(entrega.getId(),pedido.getIdEntrega());
+//    	
+//    }
 
 
 
