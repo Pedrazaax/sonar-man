@@ -36,7 +36,7 @@ steps:
 - script: |
     npm install -g firebase-tools
     cd $(Build.SourcesDirectory)
-    firebase init
+    firebase login
     firebase deploy --token '$(FIREBASE_TOKEN)'
   displayName: 'Deploy to Firebase'
 
