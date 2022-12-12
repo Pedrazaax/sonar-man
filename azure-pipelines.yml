@@ -7,7 +7,7 @@ trigger:
 - DEV_S3
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
 
 steps:
 - task: Maven@3
