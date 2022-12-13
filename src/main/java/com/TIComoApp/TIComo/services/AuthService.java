@@ -89,11 +89,7 @@ public class AuthService {
 		cliente.setPasswordDoble(cliente.getPassword());
 		
 		String con = BCrypt.hashpw("8Caracteres", BCrypt.gensalt());
-		
-		String idAdmin = null;
-		
-		Administrador admin = new Administrador("Administrador","Apellido","admin@admin.com",con,con,true,0,"Rusia");
-		adminRepository.insert(admin);
+	
 		clienteRepository.insert(cliente);
 
 	}

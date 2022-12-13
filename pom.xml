@@ -14,6 +14,7 @@
 	<name>TIComo</name>
 	<description>TIComo backend</description>
 	<properties>
+		<sonar.coverage.exclusions>**/TIComo/*</sonar.coverage.exclusions>
 		<java.version>1.8</java.version>
 		<sonar.organization>pedraza</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -82,7 +83,7 @@
 				<configuration>
 					<!-- any configuration options here -->
 				</configuration>
-				
+
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -179,39 +180,6 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
-			<!-- commented for lab session concerning maintenance -->
-			<!--
-<plugin>
-<groupId>org.apache.maven.plugins</groupId>
-<artifactId>maven-pmd-plugin</artifactId>
-<configuration>
-<skipEmptyReport>false</skipEmptyReport>
-</configuration>
-</plugin>
-<plugin>
-<groupId>org.codehaus.mojo</groupId>
-<artifactId>findbugs-maven-plugin</artifactId>
-<configuration>
-<skipEmptyReport>false</skipEmptyReport>
-</configuration>
-</plugin>
-<plugin>
-<groupId>org.apache.maven.plugins</groupId>
-<artifactId>maven-checkstyle-plugin</artifactId>
-<configuration>
-<skipEmptyReport>false</skipEmptyReport>
-</configuration>
-</plugin>
-<plugin>
-<groupId>org.apache.maven.plugins</groupId>
-<artifactId>maven-jxr-plugin</artifactId>
-</plugin>
-<plugin>
-<groupId>org.apache.maven.plugins</groupId>
-<artifactId>maven-javadoc-plugin</artifactId>
-</plugin>
--->
 		</plugins>
 	</reporting>
-
 </project>
