@@ -14,7 +14,6 @@
 	<name>TIComo</name>
 	<description>TIComo backend</description>
 	<properties>
-		<sonar.coverage.exclusions>**/TIComo/*</sonar.coverage.exclusions>
 		<java.version>1.8</java.version>
 		<sonar.organization>pedraza</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -144,7 +143,7 @@
 										<limit implementation="org.jacoco.report.check.Limit">
 											<counter>COMPLEXITY</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.0</minimum>
+											<minimum>0.10</minimum>
 										</limit>
 									</limits>
 								</rule>
