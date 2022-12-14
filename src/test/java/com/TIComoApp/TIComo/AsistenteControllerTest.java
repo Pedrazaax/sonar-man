@@ -1,5 +1,6 @@
 package com.TIComoApp.TIComo;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.List;
@@ -64,7 +65,6 @@ class AsistenteControllerTest {
 	void testCrearPedido() {
 		asistenteController.crearPedido(new Pedido("125", "Atascaburras", 5, 2, "", ""));
 		pedidoController.delete("125");
-
 	}
 	
 	@Test
@@ -95,7 +95,7 @@ class AsistenteControllerTest {
 		try {
 		lista = (ArrayList<Pedido>) asistenteController.listarPedidosParaCliente("638b485141e3fe47b7ad07c5");
 		}catch(Exception e) {
-			assertEquals(lista.size(),0);
+			assertEquals(0,lista.size());
 		}
 		
 	}

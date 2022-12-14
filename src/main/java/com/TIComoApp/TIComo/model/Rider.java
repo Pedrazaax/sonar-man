@@ -42,10 +42,6 @@ public class Rider extends Usuario{
 		this.carnet = carnet;
 		this.valoracionMedia = 0.0;
 	}
-	
-	public Rider() {
-		
-	}
 	//Getters, Setters y toString
 	public String getNIF() {
 		return NIF;
@@ -84,14 +80,14 @@ public class Rider extends Usuario{
 	}
 	
 	public boolean comprobarMatricula (String matricula){
-
+		
+		boolean a = false;
+		
 	    if (matricula.toUpperCase().matches("^[0-9]{4}[A-Z]{3}$")) {
-	        return true;
-
-	    }else{
-
-	        return false;
-	    }      
+	        a = true;
+	    }  
+	    
+	    return a;
 	}
 		
 }

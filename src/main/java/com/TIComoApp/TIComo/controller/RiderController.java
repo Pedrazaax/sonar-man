@@ -61,7 +61,7 @@ public class RiderController {
 			if (entregas.isEmpty()) {
 				throw new Exception("No hay entregas.");
 			}
-			List<Entrega> entregasReparto = new ArrayList<Entrega>();
+			List<Entrega> entregasReparto = new ArrayList<>();
 			for (int i = 0; i < entregas.size(); i++) {
 				if (entregas.get(i).getEstado().equalsIgnoreCase("listo")) {
 					entregasReparto.add(entregas.get(i));
@@ -81,7 +81,7 @@ public class RiderController {
 			if (entregas.isEmpty()) {
 				throw new Exception("No hay entregas.");
 			}
-			List<Entrega> entregasListas = new ArrayList<Entrega>();
+			List<Entrega> entregasListas = new ArrayList<>();
 			for (int i = 0; i < entregas.size(); i++) {
 				if (entregas.get(i).getEstado().equalsIgnoreCase("reparto")) {
 					entregasListas.add(entregas.get(i));
@@ -101,7 +101,7 @@ public class RiderController {
 			if (entregas.isEmpty()) {
 				throw new Exception("No hay entregas.");
 			}
-			List<Entrega> entregasEntregado = new ArrayList<Entrega>();
+			List<Entrega> entregasEntregado = new ArrayList<>();
 			for (int i = 0; i < entregas.size(); i++) {
 				if (entregas.get(i).getEstado().equalsIgnoreCase("entregado")) {
 					entregasEntregado.add(entregas.get(i));

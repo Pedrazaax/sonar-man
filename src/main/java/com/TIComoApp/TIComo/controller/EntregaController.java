@@ -75,7 +75,7 @@ public class EntregaController {
 	@GetMapping("/{id}")
 	public List<Entrega> obtenerEntregasCliente(@PathVariable String id) {
 		List<Entrega> entregas = entregaRepository.findAll();
-		List<Entrega> entregasCliente = new ArrayList<Entrega>();		
+		List<Entrega> entregasCliente = new ArrayList<>();		
 		for(int i=0;i<entregas.size();i++) {
 			if(entregas.get(i).getIdCliente().equals(id)) {
 				entregasCliente.add(entregas.get(i));

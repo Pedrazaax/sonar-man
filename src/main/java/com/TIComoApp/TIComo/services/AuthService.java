@@ -88,12 +88,6 @@ public class AuthService {
 		cliente.setPassword(BCrypt.hashpw(cliente.getPassword(), BCrypt.gensalt()));
 		cliente.setPasswordDoble(cliente.getPassword());
 		
-		String con = BCrypt.hashpw("8Caracteres", BCrypt.gensalt());
-		
-		String idAdmin = null;
-		
-		Administrador admin = new Administrador("Administrador","Apellido","admin@admin.com",con,con,true,0,"Rusia");
-		adminRepository.insert(admin);
 		clienteRepository.insert(cliente);
 
 	}
@@ -121,6 +115,11 @@ public class AuthService {
 		boolean esRiderLogin = false;
 		boolean esAdminLogin = false;
 		boolean esAsistenteLogin = false;
+		String res = "respuesta";
+		String id = "id";
+		String tok = "token";
+		String nombre = "nombre";
+		String email = "email";
 		
 		//Ahora buscamos clientes por email, que pueden o no estar
 		Optional<Cliente> clienteEncontrado;
@@ -179,12 +178,13 @@ public class AuthService {
 			//Crea el tipo token para cliente
 			token = "clienteToken";
 			
+			
 			//Construye la respuesta
-			jso.put("respuesta", "clienteLogin");
-			jso.put("id", clienteEncontrado.get().getNIF());
-			jso.put("token", token);
-			jso.put("nombre", clienteEncontrado.get().getNombre());
-			jso.put("email", clienteEncontrado.get().getEmail());
+			jso.put(res, "clienteLogin");
+			jso.put(id, clienteEncontrado.get().getNIF());
+			jso.put(tok, token);
+			jso.put(nombre, clienteEncontrado.get().getNombre());
+			jso.put(email, clienteEncontrado.get().getEmail());
 			return jso;
 			}
 		
@@ -214,11 +214,11 @@ public class AuthService {
 			token = "riderToken";
 			
 			//Construye la respuesta
-			jso.put("respuesta", "riderLogin");
-			jso.put("id", riderEncontrado.get().getNIF());
-			jso.put("token", token);
-			jso.put("nombre", riderEncontrado.get().getNombre());
-			jso.put("email", riderEncontrado.get().getEmail());
+			jso.put(res, "riderLogin");
+			jso.put(id, riderEncontrado.get().getNIF());
+			jso.put(tok, token);
+			jso.put(nombre, riderEncontrado.get().getNombre());
+			jso.put(email, riderEncontrado.get().getEmail());
 			return jso;
 			}
 		
@@ -248,11 +248,11 @@ public class AuthService {
 			token = "adminToken";
 			
 			//Construye la respuesta
-			jso.put("respuesta", "adminLogin");
-			jso.put("id", adminEncontrado.get().getId());
-			jso.put("token", token);
-			jso.put("nombre", adminEncontrado.get().getNombre());
-			jso.put("email", adminEncontrado.get().getEmail());
+			jso.put(res, "adminLogin");
+			jso.put(id, adminEncontrado.get().getId());
+			jso.put(tok, token);
+			jso.put(nombre, adminEncontrado.get().getNombre());
+			jso.put(email, adminEncontrado.get().getEmail());
 			return jso;
 			}
 		

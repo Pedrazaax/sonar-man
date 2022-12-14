@@ -45,9 +45,6 @@ public class Valoracion {
 		this.comentario = comentario;
 		this.idRiderOnombreRestaurante = idRiderOnombreRestaurante;
 	}
-	public Valoracion() {
-		
-	}
 
 	//Getters, Setters y toString
 	public String getId() {

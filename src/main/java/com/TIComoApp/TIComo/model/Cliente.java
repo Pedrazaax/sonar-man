@@ -91,19 +91,21 @@ public class Cliente extends Usuario{
 	//MANTENIMIENTO
 	public boolean comprobarNif(String nif2){
 		
+		boolean a = true;
+		
 		//Compruebo que tiene 9 caracteres
 		if(nif2.length() != 9) 
-			return false;
+			a = false;
 		//Compruebo que hay dígitos hasta el último caracter
 		for(int i = 0; i < nif2.length()-1; i++) {
 			if(!Character.isDigit(nif2.charAt(i)))
-				return false;
+				a = false;
 		}
 		//Compruebo que el último caracter sea una letra
 		if(!Character.isAlphabetic(nif2.charAt(nif2.length()-1)))
-			return false;
+			a = false;
 		
-		return true;
+		return a;
 	}
 
 

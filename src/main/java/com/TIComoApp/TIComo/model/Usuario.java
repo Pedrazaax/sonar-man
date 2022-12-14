@@ -56,9 +56,6 @@ public class Usuario {
 		this.intentos = intentos;
 
 	}
-	public Usuario() {
-		
-	}
 
 	//Getters, Setters y toString
 
@@ -130,7 +127,9 @@ public class Usuario {
 	public boolean contraseniaSegura(String password) {
 		boolean segura = false;
 		char clave;
-		int  contNumero = 0, contLetraMay = 0, contLetraMin=0;
+		int contNumero = 0;
+		int contLetraMay = 0;
+		int contLetraMin=0;
 		for (int i = 0; i < password.length(); i++) {
 			clave = password.charAt(i);
 			String passValue = String.valueOf(clave);
@@ -162,11 +161,13 @@ public class Usuario {
  
         Matcher mather = pattern.matcher(email);
         
-        if (mather.find() == true) {
-            return true;
-        } else {
-            return false;
-        }
+        boolean a = false;
+        
+        if (mather.find()) {
+            a = true;
+        } 
+        
+        return a;
     
     }
     

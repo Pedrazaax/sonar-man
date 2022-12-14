@@ -26,7 +26,7 @@ public class PedidosService {
 		return p;
 	}
 
-	public Pedido save(Pedido pedido) throws IllegalArgumentException, IllegalAccessException, Exception {
+	public Pedido save(Pedido pedido) throws IllegalArgumentException, Exception {
 		
 		this.checkMethod(pedido);
 		
@@ -39,6 +39,7 @@ public class PedidosService {
 			if (f.getName().equals("id")) {
 		        continue;
 		    }
+			
 			f.setAccessible(true);
 
 			if(Objects.isNull(f.get(entrega)))
@@ -74,7 +75,7 @@ public class PedidosService {
 		
 	}
 
-	public Pedido pedidoRealizado(String id, Entrega entrega) throws IllegalArgumentException, IllegalAccessException, Exception {
+	public Pedido pedidoRealizado(String id, Entrega entrega) throws IllegalArgumentException, Exception {
 		
 		Pedido pedidoFromDB = this.findById(id);	
 		pedidoFromDB.setPedidoRealizado(true);	

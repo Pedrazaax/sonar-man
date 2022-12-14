@@ -10,7 +10,7 @@ import com.TIComoApp.TIComo.model.Asistente;
 import com.TIComoApp.TIComo.repository.AsistenteRepository;
 
 @SpringBootTest
-public class AsistenteTest {
+class AsistenteTest {
 
 	private Asistente asistente, asistente2;
 

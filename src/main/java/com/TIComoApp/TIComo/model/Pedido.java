@@ -56,10 +56,6 @@ public class Pedido {
 		this.nombreRestaurante = nombreRestaurante;
 	}
 	
-	public Pedido() {
-		
-	}
-	
 	//Getters, Setters y toString
 	public String getId() {
 		return id;

@@ -25,7 +25,7 @@ public class AsistenteService {
 	
 	public List<Cliente> listarUsuarios() throws Exception {
         List<Cliente> lista = clienteRepo.findAll();
-        if (lista.size() == 0) {
+        if (lista.isEmpty()) {
             throw new Exception("No hay usuarios en la base de datos.");
         } else {
             return lista;
