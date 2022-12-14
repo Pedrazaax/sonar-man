@@ -37,7 +37,6 @@ public class AsistenteController {
 	@Autowired
 	private PedidoController controladorPedidos;
 	
-	
 	@PostMapping("/listarPedidos")
     public List<Pedido> listarPedidosParaCliente(@RequestBody String idCliente) {
 		try {
