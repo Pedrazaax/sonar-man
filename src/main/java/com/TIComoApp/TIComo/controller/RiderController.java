@@ -74,8 +74,8 @@ public class RiderController {
 	}
 
 	// MANTENIMIENTO
-	@GetMapping("/entregasEnReparto")
-	public List<Entrega> listarEntregasEnReparto() throws Exception {
+	@PostMapping("/entregasEnReparto")
+	public List<Entrega> listarEntregasEnReparto(@RequestBody String idRider) throws Exception {
 		try {
 			List<Entrega> entregas = entregaRepository.findAll();
 			if (entregas.isEmpty()) {
@@ -83,7 +83,7 @@ public class RiderController {
 			}
 			List<Entrega> entregasListas = new ArrayList<Entrega>();
 			for (int i = 0; i < entregas.size(); i++) {
-				if (entregas.get(i).getEstado().equalsIgnoreCase("reparto")) {
+				if (entregas.get(i).getEstado().equalsIgnoreCase("reparto") && entregas.get(i).getIdRider().equals(idRider)) {
 					entregasListas.add(entregas.get(i));
 				}
 			}
